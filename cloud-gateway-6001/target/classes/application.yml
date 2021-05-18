@@ -1,0 +1,19 @@
+server:
+  port: 6001
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    #注册到consul注册中心
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+    #gateway网关路由配置
+    gateway:
+      routes:
+        - id: gateway-service1  #我们自定义的路由 ID，保持唯一
+          uri: http://localhost:8001  #目标服务地址
+          predicates:
+            - Path=/goods/getGoods/**    #断言，条件满足则路由跳转
